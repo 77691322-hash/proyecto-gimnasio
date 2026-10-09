@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Registrar paquete')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menu}"></nav>
+
+<main class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div th:replace="~{fragmentos :: mensajes}"></div>
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h1 class="h5 mb-0" th:text="${paquete.idPaquete == null} ? 'Registrar paquete' : 'Editar paquete'"></h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" th:action="@{/paquetes/guardar}" th:object="${paquete}">
+                        <input type="hidden" th:field="*{idPaquete}">
+                        <input type="hidden" th:field="*{estado}">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label" for="nombre">Nombre</label>
+                                <input class="form-control" th:field="*{nombre}" required maxlength="100">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label" for="precio">Precio mensual (S/)</label>
+                                <input class="form-control" type="number" step="0.01" min="0" th:field="*{precio}" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="descripcion">Descripción</label>
+                            <textarea class="form-control" rows="2" th:field="*{descripcion}" maxlength="255"></textarea>
+                        </div>
+
+                        <p class="form-label">Productos o servicios que incluye</p>
+                        <div class="list-group mb-3">
+                            <label class="list-group-item" th:each="producto : ${productos}">
+                                <input class="form-check-input me-2" type="checkbox" name="productos"
+                                       th:value="${producto.idProducto}"
+                                       th:checked="${seleccionados.contains(producto.idProducto)}">
+                                <span th:text="${producto.nombre}"></span>
+                                <span class="badge text-bg-light border float-end" th:text="${producto.categoria.nombre}"></span>
+                            </label>
+                        </div>
+
+                        <button class="btn btn-danger" type="submit">Registrar Paquete</button>
+                        <a class="btn btn-outline-secondary" th:href="@{/paquetes}">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

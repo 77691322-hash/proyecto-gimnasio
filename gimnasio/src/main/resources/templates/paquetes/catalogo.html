@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Paquetes')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menuPublico}"></nav>
+
+<main class="container py-4">
+    <h1 class="h3">Paquetes disponibles</h1>
+    <p class="text-muted">Elige un paquete, ingresa tu DNI y envía tu solicitud. El pago se completa en recepción.</p>
+    <div th:replace="~{fragmentos :: mensajes}"></div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="paquete : ${paquetes}">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-dark text-white text-center">
+                    <h2 class="h4 mb-0" th:text="${paquete.nombre}"></h2>
+                </div>
+                <div class="card-body">
+                    <p class="display-6 text-center text-danger mb-0" th:text="'S/ ' + ${paquete.precio}"></p>
+                    <p class="text-center text-muted">Vigencia de 1 mes</p>
+                    <p th:text="${paquete.descripcion}"></p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="detalle : ${paquete.detalles}"
+                            th:if="${detalle.producto.estado}" th:text="${detalle.producto.nombre}"></li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white">
+                    <form class="input-group" method="post" th:action="@{/paquetes/solicitar}">
+                        <input type="hidden" name="idPaquete" th:value="${paquete.idPaquete}">
+                        <input class="form-control" name="dni" placeholder="Tu DNI" required pattern="[0-9]{8}"
+                               title="El DNI tiene 8 dígitos">
+                        <button class="btn btn-danger" type="submit">Solicitar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="text-center text-muted py-5" th:if="${paquetes.isEmpty()}">Por ahora no hay paquetes disponibles.</p>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

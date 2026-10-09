@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="cabecera(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo} + ' | Gym System'">Gym System</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+
+<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-dark bg-dark"
+     th:with="esAdministrador=${session.usuario.rol == 'ADMINISTRADOR'}">
+    <div class="container">
+        <a class="navbar-brand marca" th:href="${esAdministrador} ? @{/dashboard} : @{/clientes}">GYM SYSTEM</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item" th:if="${esAdministrador}">
+                    <a class="nav-link" th:href="@{/dashboard}">Inicio</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Clientes</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/clientes}">Consultar clientes</a></li>
+                        <li><a class="dropdown-item" th:href="@{/clientes/nuevo}">Nuevo cliente</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Membresías</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/paquetes/catalogo}">Consultar paquetes</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Cobros</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/cobros/solicitudes}">Solicitudes de compra</a></li>
+                        <li><a class="dropdown-item" th:href="@{/cobros}">Historial de cobros</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" th:if="${esAdministrador}">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Paquetes</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/paquetes}">Gestionar paquetes</a></li>
+                        <li><a class="dropdown-item" th:href="@{/paquetes/nuevo}">Nuevo paquete</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Personal</a>
+                    <ul class="dropdown-menu">
+                        <li th:if="${esAdministrador}"><a class="dropdown-item" th:href="@{/personal}">Consultar personal</a></li>
+                        <li th:if="${esAdministrador}"><a class="dropdown-item" th:href="@{/personal/nuevo}">Nuevo personal</a></li>
+                        <li th:if="${esAdministrador}"><a class="dropdown-item" th:href="@{/asistencia/historial}">Historial de asistencia</a></li>
+                        <li><a class="dropdown-item" th:href="@{/asistencia/marcar}">Marcar asistencia</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" th:if="${esAdministrador}">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Configuración</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/categorias}">Categorías</a></li>
+                        <li><a class="dropdown-item" th:href="@{/productos}">Productos / Servicios</a></li>
+                        <li><a class="dropdown-item" th:href="@{/usuarios}">Usuarios</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/publicidad}">Publicidad</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/contacto}">Contacto</a></li>
+                <li class="nav-item">
+                    <span class="navbar-text text-white mx-lg-3" th:text="${session.usuario.nombreUsuario}"></span>
+                </li>
+                <li class="nav-item"><a class="btn btn-outline-light btn-sm mt-1" th:href="@{/logout}">Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav th:fragment="menuPublico" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand marca" th:href="@{/publicidad}">GYM SYSTEM</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPublico">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuPublico">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/publicidad}">Publicidad</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/paquetes/catalogo}">Paquetes</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/contacto}">Contacto</a></li>
+            </ul>
+            <a class="btn btn-danger btn-sm" th:if="${session.usuario == null}" th:href="@{/login}">Iniciar sesión</a>
+            <a class="btn btn-outline-light btn-sm" th:if="${session.usuario != null}" th:href="@{/clientes}">Volver al sistema</a>
+        </div>
+    </div>
+</nav>
+
+<div th:fragment="mensajes">
+    <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}"></div>
+    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+</div>
+
+<div th:fragment="barras(titulo, datos)" class="col-lg-6">
+    <div class="card shadow-sm h-100">
+        <div class="card-header fw-semibold" th:text="${titulo}"></div>
+        <div class="card-body">
+            <p class="text-muted mb-0" th:if="${datos.isEmpty()}">Sin registros en el periodo.</p>
+            <div class="row align-items-center mb-2" th:each="barra : ${datos}">
+                <div class="col-4 small" th:text="${barra.etiqueta}"></div>
+                <div class="col-6">
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" th:style="'width: ' + ${barra.porcentaje} + '%'"></div>
+                    </div>
+                </div>
+                <div class="col-2 small text-end fw-semibold" th:text="${barra.valor}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

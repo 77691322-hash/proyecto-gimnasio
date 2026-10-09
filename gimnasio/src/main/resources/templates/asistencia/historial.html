@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Historial de asistencia')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menu}"></nav>
+
+<main class="container py-4">
+    <div th:replace="~{fragmentos :: mensajes}"></div>
+    <h1 class="h3 mb-3">Historial de asistencia</h1>
+
+    <form class="row g-2 align-items-end mb-3" method="get" th:action="@{/asistencia/historial}">
+        <div class="col-md-3">
+            <label class="form-label" for="desde">Desde</label>
+            <input class="form-control" type="date" id="desde" name="desde" th:value="${desde}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="hasta">Hasta</label>
+            <input class="form-control" type="date" id="hasta" name="hasta" th:value="${hasta}">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="idPersonal">Trabajador</label>
+            <select class="form-select" id="idPersonal" name="idPersonal">
+                <option value="">Todos</option>
+                <option th:each="trabajador : ${trabajadores}" th:value="${trabajador.idPersonal}"
+                        th:text="${trabajador.nombre}" th:selected="${trabajador.idPersonal == idPersonal}"></option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-dark w-100" type="submit">Filtrar</button>
+        </div>
+    </form>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Hora de entrada</th>
+                    <th>Hora de salida</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="asistencia : ${asistencias}">
+                    <td th:text="${asistencia.personal.nombre}"></td>
+                    <td th:text="${#temporals.format(asistencia.fecha, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${asistencia.horaEntrada}"></td>
+                    <td>
+                        <span th:if="${asistencia.horaSalida != null}" th:text="${asistencia.horaSalida}"></span>
+                        <span class="badge text-bg-warning" th:if="${asistencia.horaSalida == null}">Sin salida</span>
+                    </td>
+                </tr>
+                <tr th:if="${asistencias.isEmpty()}">
+                    <td class="text-center text-muted py-4" colspan="4">No hay asistencias en el periodo seleccionado.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

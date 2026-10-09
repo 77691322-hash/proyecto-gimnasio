@@ -1,0 +1,27 @@
+GYM SYSTEM - Construccion de Software - Grupo 3
+
+REQUISITOS
+- IntelliJ IDEA
+- JDK 17 o superior
+- Internet solo la primera vez (IntelliJ descarga las librerias de Spring Boot)
+
+COMO ABRIRLO
+1. Descomprime el zip.
+2. En IntelliJ: File > Open y elige la carpeta "gimnasio" (la que contiene pom.xml).
+3. Si pregunta, elige "Trust Project" y espera a que termine de cargar Maven (barra inferior).
+4. Abre src/main/java/com/gimnasio/GymApplication.java y pulsa el boton verde de ejecutar.
+5. En el navegador entra a http://localhost:8080
+
+CUENTAS Y DATOS DE EJEMPLO
+Estan en src/main/java/com/gimnasio/service/DatosIniciales.java
+Se crean solos la primera vez que se ejecuta el proyecto.
+
+BASE DE DATOS
+Es H2 y se guarda en la carpeta "data" dentro del proyecto. No hay que instalar nada.
+Para empezar de cero, deten el proyecto y borra la carpeta "data".
+Para ver las tablas: http://localhost:8080/h2-console
+  JDBC URL: jdbc:h2:file:./data/gimnasio    User: sa    Password: (vacio)
+
+SI EL PUERTO 8080 ESTA OCUPADO
+Agrega esta linea en src/main/resources/application.properties:
+server.port=8081

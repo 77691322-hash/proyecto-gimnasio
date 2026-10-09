@@ -1,0 +1,48 @@
+:root {
+    --rojo-gym: #c00000;
+}
+
+.marca {
+    color: var(--rojo-gym) !important;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.btn-danger,
+.bg-danger {
+    background-color: var(--rojo-gym) !important;
+    border-color: var(--rojo-gym) !important;
+}
+
+.link-danger,
+.text-danger {
+    color: var(--rojo-gym) !important;
+}
+
+.fondo-oscuro {
+    background-color: #212121;
+    min-height: 100vh;
+}
+
+.tarjeta-centrada {
+    width: 100%;
+    max-width: 445px;
+}
+
+.portada {
+    background: linear-gradient(135deg, #212121 60%, var(--rojo-gym));
+    color: white;
+    padding: 5rem 0;
+}
+
+.tecla {
+    height: 64px;
+    font-size: 1.5rem;
+}
+
+@media print {
+    nav,
+    .no-imprimir {
+        display: none !important;
+    }
+}

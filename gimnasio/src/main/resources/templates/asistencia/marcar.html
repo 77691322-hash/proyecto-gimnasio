@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Marcar asistencia')}"></head>
+<body class="fondo-oscuro d-flex flex-column align-items-center px-3">
+
+<div class="card shadow tarjeta-centrada mt-4">
+    <div class="card-body p-4">
+        <h1 class="marca text-center">GYM SYSTEM</h1>
+        <h2 class="h4 text-center mb-3">Marcar asistencia</h2>
+        <div th:replace="~{fragmentos :: mensajes}"></div>
+
+        <form method="post" th:action="@{/asistencia/marcar}">
+            <input class="form-control form-control-lg text-center mb-3" id="dni" name="dni" placeholder="Ingrese su DNI"
+                   required pattern="[0-9]{8}" title="El DNI tiene 8 dígitos" inputmode="numeric" autocomplete="off">
+
+            <div class="row row-cols-3 g-2 mb-3">
+                <div class="col" th:each="numero : ${#numbers.sequence(1, 9)}">
+                    <button class="btn btn-outline-dark w-100 tecla" type="button"
+                            th:attr="data-tecla=${numero}" th:text="${numero}"></button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-secondary w-100 tecla" type="button" id="limpiar">C</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-dark w-100 tecla" type="button" data-tecla="0">0</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-secondary w-100 tecla" type="button" id="borrar">&larr;</button>
+                </div>
+            </div>
+
+            <button class="btn btn-danger btn-lg w-100" type="submit">Marcar Asistencia</button>
+        </form>
+    </div>
+</div>
+
+<p class="mt-4">
+    <a class="link-light" th:href="@{/clientes}">Salir del kiosco</a>
+</p>
+
+<script th:src="@{/js/kiosco.js}"></script>
+</body>
+</html>

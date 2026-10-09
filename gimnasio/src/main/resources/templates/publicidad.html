@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Publicidad')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menuPublico}"></nav>
+
+<header class="portada text-center">
+    <div class="container">
+        <img class="mb-3" th:src="@{/img/logo.svg}" alt="Logo de Gym System" width="140">
+        <h1 class="display-4 fw-bold">Entrena a tu manera</h1>
+        <p class="lead">Elige el paquete con las zonas y clases que realmente vas a usar.</p>
+        <a class="btn btn-light btn-lg" th:href="@{/paquetes/catalogo}">Ver paquetes</a>
+    </div>
+</header>
+
+<main class="container py-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h2 class="h4 text-danger">Musculación</h2>
+                    <p class="mb-0">Máquinas y peso libre para todos los niveles.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h2 class="h4 text-danger">Cardio</h2>
+                    <p class="mb-0">Caminadoras, bicicletas y elípticas.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h2 class="h4 text-danger">Clases grupales</h2>
+                    <p class="mb-0">Funcional y baile dirigidos por instructores.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

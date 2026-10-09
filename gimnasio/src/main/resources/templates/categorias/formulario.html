@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Registrar categoría')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menu}"></nav>
+
+<main class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div th:replace="~{fragmentos :: mensajes}"></div>
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h1 class="h5 mb-0" th:text="${categoria.idCategoria == null} ? 'Registrar categoría' : 'Editar categoría'"></h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" th:action="@{/categorias/guardar}" th:object="${categoria}">
+                        <input type="hidden" th:field="*{idCategoria}">
+                        <input type="hidden" th:field="*{estado}">
+                        <div class="mb-3">
+                            <label class="form-label" for="nombre">Nombre</label>
+                            <input class="form-control" th:field="*{nombre}" required maxlength="100">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="descripcion">Descripción</label>
+                            <textarea class="form-control" rows="3" th:field="*{descripcion}" maxlength="255"></textarea>
+                        </div>
+                        <button class="btn btn-danger" type="submit">Registrar Categoría</button>
+                        <a class="btn btn-outline-secondary" th:href="@{/categorias}">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

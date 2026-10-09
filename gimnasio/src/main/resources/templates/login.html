@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Iniciar sesión')}"></head>
+<body class="fondo-oscuro d-flex flex-column align-items-center px-3">
+
+<div class="card shadow tarjeta-centrada mt-5">
+    <div class="card-body p-4">
+        <h1 class="marca text-center">GYM SYSTEM</h1>
+        <h2 class="text-center mb-3">Iniciar Sesión</h2>
+
+        <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+        <div class="alert alert-info" th:if="${param.olvide}">
+            Pide al administrador que restablezca tu contraseña desde Configuración &gt; Usuarios.
+        </div>
+
+        <form method="post" th:action="@{/login}">
+            <div class="mb-3">
+                <label class="form-label" for="usuario">Usuario o correo</label>
+                <input class="form-control form-control-lg" id="usuario" name="usuario"
+                       placeholder="Ingrese su usuario o correo" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="contrasena">Contraseña</label>
+                <input class="form-control form-control-lg" type="password" id="contrasena" name="contrasena"
+                       placeholder="Ingrese su contraseña" required>
+            </div>
+            <button class="btn btn-danger btn-lg w-100" type="submit">Iniciar Sesión</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            <a class="link-danger" th:href="@{/login(olvide=true)}">Olvidé mi contraseña</a>
+        </p>
+    </div>
+</div>
+
+<p class="mt-4">
+    <a class="link-light me-3" th:href="@{/publicidad}">Publicidad</a>
+    <a class="link-light me-3" th:href="@{/paquetes/catalogo}">Paquetes</a>
+    <a class="link-light" th:href="@{/contacto}">Contacto</a>
+</p>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Registrar usuario')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menu}"></nav>
+
+<main class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div th:replace="~{fragmentos :: mensajes}"></div>
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h1 class="h5 mb-0" th:text="${usuario.idUsuario == null} ? 'Registrar usuario' : 'Editar usuario'"></h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" th:action="@{/usuarios/guardar}" th:object="${usuario}">
+                        <input type="hidden" th:field="*{idUsuario}">
+                        <input type="hidden" th:field="*{estado}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="nombreUsuario">Nombre de usuario</label>
+                                <input class="form-control" th:field="*{nombreUsuario}" required maxlength="50">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="correo">Correo</label>
+                                <input class="form-control" type="email" th:field="*{correo}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="rol">Rol</label>
+                                <select class="form-select" th:field="*{rol}" required>
+                                    <option value="ADMINISTRADOR">Administrador</option>
+                                    <option value="PERSONAL">Personal</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="contrasena">Contraseña</label>
+                                <input class="form-control" type="password" id="contrasena" name="contrasena" minlength="6"
+                                       th:required="${usuario.idUsuario == null}">
+                                <div class="form-text" th:if="${usuario.idUsuario != null}">
+                                    Déjala vacía para mantener la contraseña actual.
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-danger" type="submit">Registrar Usuario</button>
+                        <a class="btn btn-outline-secondary" th:href="@{/usuarios}">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

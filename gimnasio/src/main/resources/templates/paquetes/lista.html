@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Paquetes')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menu}"></nav>
+
+<main class="container py-4">
+    <div th:replace="~{fragmentos :: mensajes}"></div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Gestionar paquetes</h1>
+        <a class="btn btn-danger" th:href="@{/paquetes/nuevo}">Nuevo paquete</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Productos o servicios incluidos</th>
+                    <th class="text-end">Precio mensual</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="paquete : ${paquetes}">
+                    <td>
+                        <strong th:text="${paquete.nombre}"></strong>
+                        <div class="small text-muted" th:text="${paquete.descripcion}"></div>
+                    </td>
+                    <td>
+                        <span class="badge text-bg-light border me-1" th:each="detalle : ${paquete.detalles}"
+                              th:text="${detalle.producto.nombre}"></span>
+                    </td>
+                    <td class="text-end" th:text="'S/ ' + ${paquete.precio}"></td>
+                    <td>
+                        <span class="badge" th:classappend="${paquete.estado} ? 'text-bg-success' : 'text-bg-secondary'"
+                              th:text="${paquete.estado} ? 'Activo' : 'Inactivo'"></span>
+                    </td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-dark" th:href="@{/paquetes/editar/{id}(id=${paquete.idPaquete})}">Editar</a>
+                        <form class="d-inline" method="post" th:action="@{/paquetes/estado/{id}(id=${paquete.idPaquete})}">
+                            <button class="btn btn-sm btn-outline-danger" type="submit"
+                                    th:text="${paquete.estado} ? 'Desactivar' : 'Activar'"></button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${paquetes.isEmpty()}">
+                    <td class="text-center text-muted py-4" colspan="5">No hay paquetes registrados.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Personal')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menu}"></nav>
+
+<main class="container py-4">
+    <div th:replace="~{fragmentos :: mensajes}"></div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Personal</h1>
+        <a class="btn btn-danger" th:href="@{/personal/nuevo}">Nuevo personal</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Cargo</th>
+                    <th>Horario</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="trabajador : ${trabajadores}">
+                    <td th:text="${trabajador.nombre}"></td>
+                    <td th:text="${trabajador.dni}"></td>
+                    <td th:text="${trabajador.cargo}"></td>
+                    <td th:text="${trabajador.horario}"></td>
+                    <td>
+                        <span class="badge" th:classappend="${trabajador.estado} ? 'text-bg-success' : 'text-bg-secondary'"
+                              th:text="${trabajador.estado} ? 'Activo' : 'De baja'"></span>
+                    </td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-dark" th:href="@{/personal/editar/{id}(id=${trabajador.idPersonal})}">Editar</a>
+                        <form class="d-inline" method="post" th:action="@{/personal/estado/{id}(id=${trabajador.idPersonal})}">
+                            <button class="btn btn-sm btn-outline-danger" type="submit"
+                                    th:text="${trabajador.estado} ? 'Dar de baja' : 'Reactivar'"></button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${trabajadores.isEmpty()}">
+                    <td class="text-center text-muted py-4" colspan="6">No hay personal registrado.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

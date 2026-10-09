@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Registrar personal')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menu}"></nav>
+
+<main class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div th:replace="~{fragmentos :: mensajes}"></div>
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h1 class="h5 mb-0" th:text="${personal.idPersonal == null} ? 'Registrar personal' : 'Editar personal'"></h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" th:action="@{/personal/guardar}" th:object="${personal}">
+                        <input type="hidden" th:field="*{idPersonal}">
+                        <input type="hidden" th:field="*{estado}">
+                        <div class="mb-3">
+                            <label class="form-label" for="nombre">Nombre completo</label>
+                            <input class="form-control" th:field="*{nombre}" required maxlength="100">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="dni">DNI</label>
+                                <input class="form-control" th:field="*{dni}" required pattern="[0-9]{8}"
+                                       title="El DNI tiene 8 dígitos">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="cargo">Cargo</label>
+                                <input class="form-control" th:field="*{cargo}" required maxlength="60">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="horario">Horario asignado</label>
+                            <input class="form-control" th:field="*{horario}" maxlength="100"
+                                   placeholder="Ejemplo: Lunes a sábado, 06:00 - 14:00">
+                        </div>
+                        <button class="btn btn-danger" type="submit">Registrar Personal</button>
+                        <a class="btn btn-outline-secondary" th:href="@{/personal}">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

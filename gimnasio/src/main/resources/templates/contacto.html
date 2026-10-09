@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecera('Contacto')}"></head>
+<body class="bg-light">
+<nav th:replace="~{fragmentos :: menuPublico}"></nav>
+
+<main class="container py-5">
+    <h1 class="h3 mb-4">Contacto</h1>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h2 class="h5 text-danger">Encuéntranos</h2>
+                    <ul class="list-unstyled mb-0">
+                        <li><strong>Dirección:</strong> Av. Principal 123</li>
+                        <li><strong>Teléfono:</strong> 999 999 999</li>
+                        <li><strong>Correo:</strong> contacto@gymsystem.pe</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h2 class="h5 text-danger">Horario de atención</h2>
+                    <table class="table table-sm mb-0">
+                        <tbody>
+                        <tr>
+                            <td>Lunes a sábado</td>
+                            <td class="text-end">06:00 - 22:00</td>
+                        </tr>
+                        <tr>
+                            <td>Domingos y feriados</td>
+                            <td class="text-end">08:00 - 14:00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
